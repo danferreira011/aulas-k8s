@@ -1,0 +1,17 @@
+#exemplo de criação de um pod simples
+#naked pod
+
+#exemplo didático
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: meupod
+spec:
+  containers:
+    - name: web
+      image: kubedevio/web-color:blue
+      ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP

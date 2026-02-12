@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: conversao
 spec:
+  replicas: 3
   selector:
     matchLabels:
       app: conversao
@@ -12,11 +13,11 @@ spec:
         app: conversao
         # para remover o taint 
     spec:
-      tolerations:           # 👈 COLOCA AQUI
+      tolerations:        
         - key: "node-role.kubernetes.io/control-plane"
           operator: "Exists"
           effect: "NoSchedule"
-          
+
       containers:
         - name: conversao
           image: kubedevio/conversao-temperatura:v1

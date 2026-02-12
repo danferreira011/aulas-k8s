@@ -10,7 +10,13 @@ spec:
     metadata:
       labels:
         app: conversao
+        # para remover o taint 
     spec:
+      tolerations:           # 👈 COLOCA AQUI
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Exists"
+          effect: "NoSchedule"
+          
       containers:
         - name: conversao
           image: kubedevio/conversao-temperatura:v1

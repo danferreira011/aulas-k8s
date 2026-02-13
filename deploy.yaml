@@ -20,7 +20,7 @@ spec:
 
       containers:
         - name: conversao
-          image: kubedevio/conversao-temperatura:v1
+          image: danferreira011/conversao-kind:v1
           ports:
             - containerPort: 8080
               name: http

@@ -13,18 +13,21 @@ spec:
     spec:
       containers:
       - name: caos-simulator
-        image: kubedevio/simulador-do-caos:v1
+        image: registry.k8s.io/busybox
+        command:
+          - bin/sh
+          - -c
+        args:
+          - touch /tmp/healthy; sleep 600;
         ports:
         - containerPort: 3000
         #criando uma livenessProbe para verificar se a aplicação está saudável
-        #livenessProbe usando o método httpGet para verificar a rota /health
+        #livenessProbe usando o método exec para verificar a existência do arquivo /tmp/healthy
         livenessProbe:
-          httpGet:
-            port: 3000
-            path: /health
-            httpHeaders:
-            - name: token
-              value: "true"
+          exec:
+            command:
+            - cat
+            - /tmp/healthy         
           initialDelaySeconds: 5
           periodSeconds: 5
           failureThreshold: 1

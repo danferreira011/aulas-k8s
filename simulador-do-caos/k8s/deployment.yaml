@@ -3,7 +3,8 @@ kind: Deployment
 metadata:
   name: caos-simulator
 spec:
-  selector:
+  replicas: 1
+  selector:    
     matchLabels:
       app: caos-simulator
   template:
@@ -16,6 +17,15 @@ spec:
         image: kubedevio/simulador-do-caos:v1
         ports:
         - containerPort: 3000
+        #definindo recursos do container
+        # limits = requests => QoS = Guaranteed
+        resources:
+          limits :
+            cpu: "0.2"
+            memory: 128Mi
+          requests:
+            cpu: "0.2"
+            memory: 128Mi
         #criando uma livenessProbe para verificar se a aplicação está saudável
         #livenessProbe usando o método httpGet para verificar a rota /health
         livenessProbe:

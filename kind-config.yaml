@@ -5,7 +5,7 @@ nodes:
 #port binding para acessar o serviço exposto no nodePort
   extraPortMappings:
   - containerPort: 30000  
-    hostPort: 8080
+    hostPort: 80 # hostPort: 8080
     protocol: TCP
     listenAddress: "0.0.0.0"
 # - role: control-plane

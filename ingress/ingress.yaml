@@ -67,7 +67,7 @@ metadata:
 spec:
   ingressClassName: nginx  
   rules:
-    - host: color.127.0.0.1.nip.io
+    - host: color.danferreira.vip #- host: color.127.0.0.1.nip.io
       http:
         paths:
           - path: /blue
@@ -84,7 +84,7 @@ spec:
                 name: web-green
                 port:
                   number: 80
-    - host: blue.127.0.0.1.nip.io
+    - host: blue.danferreira.vip
       http:
         paths:
           - path: /
@@ -94,7 +94,7 @@ spec:
                 name: web-blue
                 port:
                   number: 80                
-    - host: green.127.0.0.1.nip.io
+    - host: green.danferreira.vip
       http:
         paths:
           - path: /

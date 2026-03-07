@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cron-sorteador
+spec:
+  schedule: "*/2 * * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      #configurações de execução do job
+      ttlSecondsAfterFinished: 60
+      completions: 2
+      parallelism: 2
+      backoffLimit: 10
+      template:
+        metadata:
+          labels:
+            app: sorteador
+        spec:
+          containers:
+            - name: sorteador
+              image: fabricioveronez/sorteador:v1
+              env:
+                - name: NUM_ESCOLHIDO
+                  value: "2"
+                - name: NUM_MAXIMO
+                  value: "4"
+                - name: DELAY_SORTEIO
+                  value: "10"
+          restartPolicy: Never

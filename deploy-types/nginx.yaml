@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nginx
+spec:  
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Delete
+    #whenDeleted: Retain
+  serviceName: nginx
+  selector:
+    matchLabels:
+      app: nginx-state
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: nginx-state
+    spec:
+      initContainers:
+      - name: volume-page
+        image: busybox
+        command: ['sh', '-c', 'echo $(hostname) > /app/index.html']
+        volumeMounts:
+        - name: www
+          mountPath: /app
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: "azurefile"
+      resources:
+        requests:
+          storage: 1Gi
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  selector:
+    app: nginx-state
+  clusterIP: None
+  ports:
+  - port: 80
+    targetPort: 80    

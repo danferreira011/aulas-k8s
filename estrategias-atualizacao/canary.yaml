@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: web-blue
 spec:
-  replicas: 8 #vai aumentando ou diminuido conforme necessidade
+  replicas: 0 #vai aumentando ou diminuido conforme necessidade
   selector:
     matchLabels:
       app: web  
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: fabricioveronez/web-color:blue
+        image: danferreira011/web-color:blue
         ports:
         - containerPort: 80
 ---
@@ -25,7 +25,7 @@ kind: Deployment
 metadata:
   name: web-green
 spec:
-  replicas: 2 #vai aumentando ou diminuido conforme necessidade
+  replicas: 10 #vai aumentando ou diminuido conforme necessidade
   selector:
     matchLabels:
       app: web  
@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: fabricioveronez/web-color:green
+        image: danferreira011/web-color:green
         ports:
         - containerPort: 80
 ---

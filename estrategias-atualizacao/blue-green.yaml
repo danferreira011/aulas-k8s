@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: fabricioveronez/web-color:blue
+        image: danferreira011/web-color:blue
         ports:
         - containerPort: 80
 ---
@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
       - name: web
-        image: fabricioveronez/web-color:green
+        image: danferreira011/web-color:green
         ports:
         - containerPort: 80
 ---

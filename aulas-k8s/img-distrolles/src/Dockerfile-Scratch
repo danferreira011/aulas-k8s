@@ -1,0 +1,28 @@
+FROM node:alpine3.23 AS builder
+
+WORKDIR /app
+
+COPY package*.json .
+
+RUN npm install --omit=dev
+
+COPY . .
+
+#imagem scratch
+FROM scratch
+
+WORKDIR /app
+
+# Copia o node runtime
+COPY --from=builder /usr/local/bin/node /usr/local/bin/node
+
+# Copia bibliotecas necessárias
+COPY --from=builder /usr/lib /usr/lib
+COPY --from=builder /lib /lib
+
+# Copia aplicação
+COPY --from=builder /app /app
+
+EXPOSE 8080
+
+CMD ["/usr/local/bin/node", "server.js"]

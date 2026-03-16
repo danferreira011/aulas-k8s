@@ -1,0 +1,20 @@
+# values.yaml
+service:
+  type: NodePort
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      nodePort: 30000
+    - name: https
+      port: 443
+      targetPort: 443
+      nodePort: 30001
+
+nodeSelector:
+  kubernetes.io/hostname: kindcluster-control-plane
+
+tolerations:
+  - key: node-role.kubernetes.io/control-plane
+    operator: Exists
+    effect: NoSchedule

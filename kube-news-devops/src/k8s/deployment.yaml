@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql
+spec:
+  selector:
+    matchLabels:
+      app: postgresql
+  template:
+    metadata:
+      labels:
+        app: postgresql
+    spec:
+      containers:
+      - name: postgresql
+        image: postgres:15.2-alpine
+        ports:
+        - containerPort: 5432
+        envFrom:
+        - secretRef:
+            name: mysecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresql
+spec:
+  selector:
+    app: postgresql
+  ports:
+  - port: 5432
+    targetPort: 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubenews
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: kubenews
+  template:
+    metadata:
+      labels:
+        app: kubenews
+    spec:
+      containers:
+      - name: kubenews
+        image: kubedevio/kube-news:v1
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - secretRef:
+            name: mysecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubenews
+spec:
+  selector:
+    app: kubenews
+  ports:
+  - port: 80
+    targetPort: 8080
+<<<<<<< HEAD
+   #nodePort: 30000
+  #type: NodePort
+=======
+    #nodePort: 30000
+>>>>>>> ac7b32cb442ddc8f506ae9144a5095d2b90e458b
+  type: LoadBalancer

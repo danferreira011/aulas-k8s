@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap #configmap
+metadata:
+  name: app-config
+data:
+  APP_NAME: "App - ConfigMap"
+  APP_VERSION: "3.0"
+  APP_AUTHOR: "DanFerreira"
